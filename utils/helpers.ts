@@ -1,16 +1,17 @@
-export interface FormattedDate {
-  day: string;
-  month: string;
-  year: string;
-  hours: string;
-  minutes: string;
-}
-export const formatDate = (date: Date): FormattedDate => {
-  const day = String(date.getDate()).padStart(2, '0');
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const year = String(date.getFullYear());
-  const hours = String(date.getHours()).padStart(2, '0');
-  const minutes = String(date.getMinutes()).padStart(2, '0');
-
-  return { day, month, year, hours, minutes };
-};
+export const mockData = [
+  {
+    title: 'Introducción a React Native',
+    description:
+      'Aprende los fundamentos de React Native para desarrollar aplicaciones móviles.',
+  },
+  {
+    title: 'Introducción a Kotlin',
+    description:
+      'Aprende los fundamentos de React Native para desarrollar aplicaciones móviles.',
+  },
+  {
+    title: 'Introducción a Flutter',
+    description:
+      'Aprende los fundamentos de React Native para desarrollar aplicaciones móviles.',
+  },
+];

@@ -1,14 +1,24 @@
-import { View, Text, Button, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { UserData } from '@utils/interfaces';
 import { useEffect, useState } from 'react';
 import { doc, getDoc, getFirestore } from '@firebase/firestore';
+import { useNavigation } from '@react-navigation/native';
+import Courses from '@pages/courses';
 
 // const database = getFirestore();
 
-export default function Card({ userID }: { userID: string }) {
+export default function UserCard({
+  userID,
+  title,
+}: {
+  userID: string;
+  title: string;
+}) {
+  const navigation = useNavigation();
+  const imgMock = 'https://avatars.githubusercontent.com/u/29111576?v=4';
   /*const [user, setUser] = useState<UserData | null>(null);
-  
+
   useEffect(() => {
     const fetchUser = async () => {
       const userDoc = await getDoc(doc(database, 'users', userID));
@@ -30,14 +40,24 @@ export default function Card({ userID }: { userID: string }) {
   };
   return (
     <View style={styles.card}>
-      <Text style={styles.title}>Welcome John Doe</Text>
+      <Image src={imgMock} style={styles.avatar} />
+      <Text style={styles.title}>{title}</Text>
       <Text style={styles.title}>Assigments today: 3</Text>
       <View style={styles.buttonsContainer}>
-        <TouchableOpacity onPress={handleClick} style={styles.secondaryButton}>
-          <Text style={styles.title}>Courses</Text>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('Courses' as never);
+          }}
+          style={styles.secondaryButton}
+        >
+          <Text style={{ color: 'black', fontSize: 18, alignItems: 'center' }}>
+            Courses
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={handleClick} style={styles.primaryButton}>
-          <Text style={styles.title}>Assigments</Text>
+          <Text style={{ color: 'white', fontSize: 18, alignItems: 'center' }}>
+            Assigments
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -49,11 +69,20 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 20,
     margin: 10,
+    marginTop: 12,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 4.65,
     elevation: 8,
+  },
+  avatar: {
+    backgroundColor: 'blue',
+    height: 100,
+    borderRadius: 999,
+    width: 100,
+    alignSelf: 'center',
+    padding: 2,
   },
   title: {
     color: '#000',

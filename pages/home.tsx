@@ -1,33 +1,27 @@
 import { View, FlatList, Text } from 'react-native';
 import { StyleSheet } from 'react-native';
-import Card from '@components/card';
+import UserCard from '@components/userCard';
 import SearchBar from '@components/searchBar';
 import { useEffect, useState } from 'react';
-import { formatDate, FormattedDate } from '@utils/helpers';
 
 export default function Home() {
-  const [date, setDate] = useState<FormattedDate>(formatDate(new Date()));
   //mock data
-  const users = ['1'];
-
-  useEffect(() => {
-    const currentDate = () => {
-      setDate(formatDate(new Date()));
-    };
-    const dateInterval = setInterval(currentDate, 1000);
-    return () => clearInterval(dateInterval);
-  }, []);
+  const users = [{ user: { id: '1', name: 'John', assigmentes: 3 } }];
 
   return (
     <View style={styles.container}>
-      <Text style={styles.date}>{date.day}</Text>
-      <SearchBar />
       <FlatList
         data={users}
-        renderItem={({ item: cards }) => <Card userID={cards} />}
-        keyExtractor={(item) => item}
+        renderItem={({ item: mockUser }) => (
+          <UserCard
+            userID={mockUser.user.id}
+            title={`Welcome ${mockUser.user.name}`}
+          />
+        )}
+        keyExtractor={(item) => item.user.id}
         contentContainerStyle={styles.list}
       />
+      <SearchBar />
     </View>
   );
 }

@@ -8,7 +8,7 @@ export default function SearchBar() {
       <Ionicons name="search" size={20} color="#000" style={styles.icon} />
       <TextInput
         style={styles.input}
-        placeholder="Search..."
+        placeholder="Mathematics"
         placeholderTextColor="#888"
       />
     </View>
