@@ -7,54 +7,56 @@ import CourseCard from '@components/coursesCard';
 import { CourseData, Teacher } from '@utils/interfaces';
 
 export default function Home() {
+  const [searchQuery, setSearchQuery] = useState<string>('');
   //mock data
   const teacher: Teacher[] = [{ id: '1', name: 'John', lastName: 'Doe' }];
   const courses: CourseData[] = [
     {
       id: '1',
-      title: 'Mathematics',
+      title: 'Matemáticas',
       description: '1° TSAS 2024',
       teacher: teacher,
     },
     {
       id: '2',
-      title: 'Spanish',
+      title: 'Programación 1',
       description: '1° TSAS 2024',
       teacher: teacher,
     },
     {
       id: '3',
-      title: 'Spanish',
+      title: 'Lógica',
       description: '1° TSAS 2024',
       teacher: teacher,
     },
     {
       id: '4',
-      title: 'Spanish',
+      title: 'Sistema Operativo',
       description: '1° TSAS 2024',
       teacher: teacher,
     },
     {
       id: '5',
-      title: 'Spanish',
+      title: 'Estructura de Datos',
       description: '1° TSAS 2024',
       teacher: teacher,
     },
   ];
-
+  const filteredCourses = courses.filter((course) =>
+    course.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
   return (
     <View style={styles.container}>
-      <UserCard userID="1" title="Welcome Mario Correa" />
+      <UserCard userID="1" title="Bienvenido Mario Correa" />
+      <Text style={styles.text}>Materias del día</Text>
       <FlatList
-        data={courses}
+        data={filteredCourses}
         keyExtractor={(item) => item.id}
         renderItem={({ item: course }) => (
           <CourseCard userID="1" courseID={course.id} courseInfo={course} />
         )}
       />
-      <View style={styles.searchBar}>
-        <SearchBar />
-      </View>
+      <View style={styles.searchBar}></View>
     </View>
   );
 }
@@ -65,14 +67,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     justifyContent: 'center',
   },
-  date: {
-    fontSize: 18,
-    color: '#333',
-    marginBottom: 10,
-    fontWeight: 'bold',
-  },
-  list: {
-    alignItems: 'center',
+  text: {
+    fontSize: 25,
+    textAlign: 'center',
   },
   searchBar: { backgroundColor: '#722f37' },
 });

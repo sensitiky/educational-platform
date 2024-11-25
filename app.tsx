@@ -6,8 +6,18 @@ import Courses from '@pages/courses';
 import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import Calendar from '@pages/calendar';
+import CourseInfo from '@pages/courseInfo';
+import { CourseData } from '@utils/interfaces';
+import CourseCard from '@components/coursesCard';
 
-const Drawer = createDrawerNavigator();
+type RootStackParamList = {
+  Home: undefined;
+  Courses: undefined;
+  Calendar: undefined;
+  Course: { course: CourseData };
+};
+
+const Drawer = createDrawerNavigator<RootStackParamList>();
 
 export default function App() {
   return (
@@ -17,7 +27,7 @@ export default function App() {
           name="Home"
           component={Home}
           options={{
-            title: 'Home',
+            title: 'Inicio',
             headerTitleAlign: 'center',
             drawerIcon: ({ color, size }) => (
               <Ionicons name="home-outline" size={size} color={color} />
@@ -28,10 +38,8 @@ export default function App() {
           name="Courses"
           component={Courses}
           options={{
-            title: 'Courses',
-            drawerIcon: ({ color, size }) => (
-              <Ionicons name="easel-outline" size={size} color={color} />
-            ),
+            title: 'Materias',
+            drawerItemStyle: { display: 'none' },
           }}
         />
         <Drawer.Screen
@@ -46,6 +54,14 @@ export default function App() {
             drawerIcon: ({ color, size }) => (
               <Ionicons name="calendar-outline" size={size} color="#722f37" />
             ),
+          }}
+        />
+        <Drawer.Screen
+          name="Course"
+          component={CourseInfo}
+          options={{
+            drawerItemStyle: { display: 'none' },
+            title: '',
           }}
         />
       </Drawer.Navigator>

@@ -35,14 +35,12 @@ export default function UserCard({
   if (!user) {
     return <Text style={styles.loading}>Loading...</Text>;
   }*/
-  const handleClick = () => {
-    console.log('Presionado');
-  };
+
   return (
     <View style={styles.card}>
       <Image src={imgMock} style={styles.avatar} />
       <Text style={styles.title}>{title}</Text>
-      <Text style={styles.title}>Assigments today: 3</Text>
+      <Text style={styles.title}>Tareas del día: 3</Text>
       <View style={styles.buttonsContainer}>
         <TouchableOpacity
           onPress={() => {
@@ -51,12 +49,17 @@ export default function UserCard({
           style={styles.secondaryButton}
         >
           <Text style={{ color: 'black', fontSize: 18, alignItems: 'center' }}>
-            Courses
+            Perfil
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={handleClick} style={styles.primaryButton}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('Courses' as never);
+          }}
+          style={styles.primaryButton}
+        >
           <Text style={{ color: 'white', fontSize: 18, alignItems: 'center' }}>
-            Assigments
+            Materias
           </Text>
         </TouchableOpacity>
       </View>

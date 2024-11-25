@@ -3,52 +3,62 @@ import SearchBar from '@components/searchBar';
 import { View, StyleSheet, FlatList } from 'react-native';
 import CourseCard from '@components/coursesCard';
 import { CourseData, Teacher } from '@utils/interfaces';
+import { useState } from 'react';
 
 export default function Courses() {
+  const [searchQuery, setSearchQuery] = useState('');
   const users = [{ user: { id: '1', name: 'John', assigmentes: 3 } }];
   const teacher: Teacher[] = [{ id: '1', name: 'John', lastName: 'Doe' }];
   const courses: CourseData[] = [
     {
       id: '1',
-      title: 'Mathematics',
+      title: 'Matemáticas',
       description: '1° TSAS 2024',
       teacher: teacher,
     },
     {
       id: '2',
-      title: 'Spanish',
+      title: 'Programación 1',
       description: '1° TSAS 2024',
       teacher: teacher,
     },
     {
       id: '3',
-      title: 'Spanish',
+      title: 'Lógica',
       description: '1° TSAS 2024',
       teacher: teacher,
     },
     {
       id: '4',
-      title: 'Spanish',
+      title: 'Sistema Operativo',
       description: '1° TSAS 2024',
       teacher: teacher,
     },
     {
       id: '5',
-      title: 'Spanish',
+      title: 'Estructura de Datos',
       description: '1° TSAS 2024',
       teacher: teacher,
     },
   ];
+  const filteredCourses = courses.filter((course) =>
+    course.title.toLowerCase().includes(searchQuery)
+  );
   return (
     <View style={styles.container}>
       <FlatList
-        data={courses}
+        data={filteredCourses}
         keyExtractor={(item) => item.id}
         renderItem={({ item: course }) => (
           <CourseCard courseInfo={course} userID="1" courseID={course.id} />
         )}
       />
-      <SearchBar />
+      <View style={styles.searchBarContainer}>
+        <SearchBar
+          value={searchQuery}
+          onChangeText={(text) => setSearchQuery(text)}
+        />
+      </View>
     </View>
   );
 }
@@ -56,6 +66,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  searchBarContainer: {
+    backgroundColor: '#722f37',
   },
   date: {
     fontSize: 18,
