@@ -6,7 +6,6 @@ import { useState } from 'react';
 
 export default function Courses() {
   const [searchQuery, setSearchQuery] = useState('');
-  const users = [{ user: { id: '1', name: 'John', assigmentes: 3 } }];
   const teacher: Teacher[] = [{ id: '1', name: 'John', lastName: 'Doe' }];
   const courses: CourseData[] = [
     {

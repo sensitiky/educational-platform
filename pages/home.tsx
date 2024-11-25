@@ -1,5 +1,4 @@
-import { View, FlatList, Text } from 'react-native';
-import { StyleSheet } from 'react-native';
+import { View, FlatList, Text, StyleSheet } from 'react-native';
 import UserCard from '@components/userCard';
 import CourseCard from '@components/coursesCard';
 import { CourseData, Teacher } from '@utils/interfaces';

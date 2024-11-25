@@ -1,5 +1,4 @@
-import { View, Text, TouchableOpacity, Image } from 'react-native';
-import { StyleSheet } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 export default function UserCard({
