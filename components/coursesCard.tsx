@@ -9,14 +9,15 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { CourseData } from '@utils/interfaces';
-import { mockData } from '@utils/helpers';
 
 export default function CourseCard({
   userID,
   courseID,
+  courseInfo,
 }: {
   userID: string;
   courseID: string;
+  courseInfo: CourseData;
 }) {
   const navigation = useNavigation();
   const [courseData, setCourseData] = useState<CourseData | null>(null);
@@ -27,7 +28,7 @@ export default function CourseCard({
     const fetchCourseData = async () => {
       try {
         await new Promise((resolve) => setTimeout(resolve, 1000));
-        setCourseData(mockData[0]);
+        setCourseData(courseInfo);
       } catch (err: any) {
         setError(`Error ${err}`);
       } finally {
@@ -36,12 +37,7 @@ export default function CourseCard({
     };
 
     fetchCourseData();
-  }, [courseID]);
-
-  const handleClick = () => {
-    console.log('Presionado');
-  };
-
+  }, []);
   if (loading) {
     return (
       <View style={styles.card}>
@@ -62,52 +58,42 @@ export default function CourseCard({
     <View style={styles.card}>
       <Text style={styles.title}>{courseData?.title}</Text>
       <Text style={styles.subtitle}>{courseData?.description}</Text>
-      <View style={styles.buttonsContainer}>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('Courses' as never);
-          }}
-          style={styles.secondaryButton}
-        >
-          <Text style={styles.secondaryButtonText}>Courses</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={handleClick} style={styles.primaryButton}>
-          <Text style={styles.primaryButtonText}>Assignments</Text>
-        </TouchableOpacity>
-      </View>
+      <Text style={styles.subtitle}>
+        {courseData?.teacher.map(
+          (teacher) => teacher.name + ' ' + teacher.lastName
+        )}
+      </Text>
     </View>
   );
 }
 const styles = StyleSheet.create({
   card: {
+    display: 'flex',
+    alignItems: 'flex-start',
     backgroundColor: '#fff',
     borderRadius: 20,
     padding: 20,
-    margin: 10,
-    marginTop: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4.65,
+    margin: 5,
     elevation: 8,
   },
   title: {
     color: '#000',
     fontSize: 18,
-    textAlign: 'center',
+    textAlign: 'left',
     fontWeight: '700',
     marginBottom: 5,
   },
   subtitle: {
     color: '#555',
     fontSize: 16,
-    textAlign: 'center',
+    textAlign: 'left',
     marginBottom: 15,
   },
   buttonsContainer: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    padding: 2,
   },
   primaryButton: {
     borderRadius: 99,

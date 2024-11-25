@@ -9,7 +9,7 @@ export default function SearchBar() {
       <TextInput
         style={styles.input}
         placeholder="Mathematics"
-        placeholderTextColor="#888"
+        placeholderTextColor="#5e5e5e"
       />
     </View>
   );
@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginRight: 8,
+    color: '#5e5e5e',
   },
   input: {
     flex: 1,

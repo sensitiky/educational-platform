@@ -44,7 +44,7 @@ export default function App() {
               borderBottomWidth: 1,
             },
             drawerIcon: ({ color, size }) => (
-              <Ionicons name="calendar-outline" size={size} color={color} />
+              <Ionicons name="calendar-outline" size={size} color="#722f37" />
             ),
           }}
         />

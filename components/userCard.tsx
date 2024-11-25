@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 4.65,
-    elevation: 8,
+    elevation: 20,
   },
   avatar: {
     backgroundColor: 'blue',
@@ -90,14 +90,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   buttonsContainer: {
-    flex: 1,
     marginTop: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
   primaryButton: {
     borderRadius: 99,
-    backgroundColor: '#007AFF',
+    backgroundColor: '#722f37',
     width: '45%',
     alignItems: 'center',
     padding: 10,
