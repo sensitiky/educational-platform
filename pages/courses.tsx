@@ -1,4 +1,3 @@
-import UserCard from '@components/userCard';
 import SearchBar from '@components/searchBar';
 import { View, StyleSheet, FlatList } from 'react-native';
 import CourseCard from '@components/coursesCard';

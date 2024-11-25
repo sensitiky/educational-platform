@@ -1,12 +1,6 @@
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { StyleSheet } from 'react-native';
-import { UserData } from '@utils/interfaces';
-import { useEffect, useState } from 'react';
-import { doc, getDoc, getFirestore } from '@firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
-import Courses from '@pages/courses';
-
-// const database = getFirestore();
 
 export default function UserCard({
   userID,
@@ -17,24 +11,6 @@ export default function UserCard({
 }) {
   const navigation = useNavigation();
   const imgMock = 'https://avatars.githubusercontent.com/u/29111576?v=4';
-  /*const [user, setUser] = useState<UserData | null>(null);
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const userDoc = await getDoc(doc(database, 'users', userID));
-      if (userDoc.exists()) {
-        setUser({
-          id: userDoc.id,
-          ...(userDoc.data() as Omit<UserData, 'id'>),
-        });
-      }
-    };
-    fetchUser();
-  }, [userID]);
-
-  if (!user) {
-    return <Text style={styles.loading}>Loading...</Text>;
-  }*/
 
   return (
     <View style={styles.card}>
