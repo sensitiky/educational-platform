@@ -1,4 +1,4 @@
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import Home from '@pages/home';
@@ -8,7 +8,6 @@ import { Ionicons } from '@expo/vector-icons';
 import Calendar from '@pages/calendar';
 import CourseInfo from '@pages/courseInfo';
 import { CourseData } from '@utils/interfaces';
-import CourseCard from '@components/coursesCard';
 
 type RootStackParamList = {
   Home: undefined;
