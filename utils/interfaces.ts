@@ -15,3 +15,6 @@ export interface Teacher {
   name: string;
   lastName: string;
 }
+export interface AuthenticationFormProps {
+  changeTab: () => void;
+}

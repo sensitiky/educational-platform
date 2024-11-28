@@ -1,4 +1,3 @@
-import { StyleSheet } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import Home from '@pages/home';
@@ -7,21 +6,21 @@ import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import Calendar from '@pages/calendar';
 import CourseInfo from '@pages/courseInfo';
-import { CourseData } from '@utils/interfaces';
+import Welcome from '@pages/welcome';
+import { screensParameters } from '@utils/types';
 
-type RootStackParamList = {
-  Home: undefined;
-  Courses: undefined;
-  Calendar: undefined;
-  Course: { course: CourseData };
-};
-
-const Drawer = createDrawerNavigator<RootStackParamList>();
-
+const Drawer = createDrawerNavigator<screensParameters>();
 export default function App() {
   return (
     <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Home">
+      <Drawer.Navigator initialRouteName="Welcome">
+        <Drawer.Screen
+          name="Welcome"
+          component={Welcome}
+          options={{
+            drawerItemStyle: { display: 'none' },
+          }}
+        />
         <Drawer.Screen
           name="Home"
           component={Home}
@@ -67,12 +66,3 @@ export default function App() {
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
