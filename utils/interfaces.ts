@@ -1,7 +1,9 @@
+import { LightTheme, DarkTheme } from '@constants/theme';
+
 export interface UserData {
   id: string;
-  name: string;
-  lastName: string;
+  name?: string;
+  lastName?: string;
   role: string;
 }
 export interface CourseData {
@@ -17,4 +19,8 @@ export interface Teacher {
 }
 export interface AuthenticationFormProps {
   changeTab: () => void;
+}
+export interface IThemeContext {
+  theme: typeof LightTheme | typeof DarkTheme;
+  toggleTheme: () => void;
 }

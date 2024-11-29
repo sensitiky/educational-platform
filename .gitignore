@@ -41,3 +41,6 @@ firestore.*
 .firebaserc
 storage.rules
 database.rules.json
+
+# private data
+.env

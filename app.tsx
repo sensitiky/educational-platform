@@ -1,17 +1,34 @@
-import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import Home from '@pages/home';
 import Courses from '@pages/courses';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import Calendar from '@pages/calendar';
 import CourseInfo from '@pages/courseInfo';
 import Welcome from '@pages/welcome';
-import { screensParameters } from '@utils/types';
+import { DarkTheme, LightTheme } from '@constants/theme';
+import { ThemeContext, Drawer } from '@utils/helpers';
 
-const Drawer = createDrawerNavigator<screensParameters>();
 export default function App() {
+  const [theme, setTheme] = useState<typeof LightTheme | typeof DarkTheme>(
+    LightTheme
+  );
+
+  /*useEffect(() => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      setTheme(DarkTheme);
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme?.mode === 'light' ? DarkTheme : LightTheme;
+    setTheme(newTheme);
+    localStorage.setItem('theme', newTheme.mode);
+  };*/
+
   return (
+    //<ThemeContext.Provider value={{ theme, toggleTheme }}>
     <NavigationContainer>
       <Drawer.Navigator initialRouteName="Welcome">
         <Drawer.Screen
@@ -64,5 +81,6 @@ export default function App() {
         />
       </Drawer.Navigator>
     </NavigationContainer>
+    //</ThemeContext.Provider>
   );
 }

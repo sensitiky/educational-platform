@@ -1,4 +1,6 @@
-import { AuthenticationFormProps } from '@utils/interfaces';
+import { useNavigation } from '@react-navigation/native';
+import { registerUser, saveUser } from '@services/firebase';
+import { AuthenticationFormProps, UserData } from '@utils/interfaces';
 import React, { useState } from 'react';
 import {
   View,
@@ -14,8 +16,8 @@ export default function Register({ changeTab }: AuthenticationFormProps) {
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
-
-  const handleRegister = () => {
+  const navigation = useNavigation();
+  const handleRegister = async () => {
     if (!email || !password || !confirmPassword) {
       Alert.alert('Error', 'Por favor, completa todos los campos.');
       return;
@@ -25,10 +27,23 @@ export default function Register({ changeTab }: AuthenticationFormProps) {
       Alert.alert('Error', 'Las contraseñas no coinciden.');
       return;
     }
-
-    // Placeholder for registration logic
-    Alert.alert('Registro', 'Funcionalidad de registro pendiente.');
-    // Implement Firebase registration here later
+    setLoading(true);
+    const userCredential = await registerUser(email, password);
+    if (userCredential) {
+      const user: UserData = {
+        id: userCredential.user.uid,
+        name: 'Juan',
+        lastName: 'Perez',
+        role: 'student',
+      };
+      const succes = await saveUser(user);
+      if (succes) {
+        console.log('Funciona');
+        navigation.navigate('Home' as never);
+      } else {
+        console.log('Pincho');
+      }
+    }
   };
 
   return (
