@@ -12,7 +12,7 @@ export default function UserCard({
   const imgMock = 'https://avatars.githubusercontent.com/u/29111576?v=4';
 
   return (
-    <View style={styles.card}>
+    <View className="bg-white p-4 rounded-lg m-2 elevation-xl">
       <Image src={imgMock} style={styles.avatar} />
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.title}>Tareas del día: 3</Text>

@@ -8,6 +8,7 @@ import CourseInfo from '@pages/courseInfo';
 import Welcome from '@pages/welcome';
 import { DarkTheme, LightTheme } from '@constants/theme';
 import { ThemeContext, Drawer } from '@utils/helpers';
+import './global.css';
 
 export default function App() {
   const [theme, setTheme] = useState<typeof LightTheme | typeof DarkTheme>(

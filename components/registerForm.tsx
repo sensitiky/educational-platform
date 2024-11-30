@@ -17,6 +17,7 @@ export default function Register({ changeTab }: AuthenticationFormProps) {
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const navigation = useNavigation();
+
   const handleRegister = async () => {
     if (!email || !password || !confirmPassword) {
       Alert.alert('Error', 'Por favor, completa todos los campos.');

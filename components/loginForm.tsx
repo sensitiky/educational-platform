@@ -1,14 +1,8 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { AuthenticationFormProps } from '@utils/interfaces';
-//import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { loginUser } from '@services/firebase';
 
 export default function Login({ changeTab }: AuthenticationFormProps) {
   const [email, setEmail] = useState<string>('');
@@ -16,30 +10,28 @@ export default function Login({ changeTab }: AuthenticationFormProps) {
   const [loading, setLoading] = useState<boolean>(false);
   const navigation = useNavigation();
 
-  //const auth = getAuth();
-  /*const handleLogin = async () => {
+  const handleLogin = async () => {
     if (!email || !password) {
-      Alert.alert('Error', 'Por favor, ingresa el correo y la contraseña.');
+      Alert.alert('Error', 'Por favor, completa todos los campos.');
       return;
     }
 
     setLoading(true);
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      Alert.alert('Éxito', 'Has iniciado sesión correctamente.');
-      // Navega a la pantalla principal o realiza otras acciones
-    } catch (error: any) {
-      Alert.alert('Error de Inicio de Sesión', error.message);
-    } finally {
-      setLoading(false);
+    const success = await loginUser(email, password);
+    if (success) {
+      navigation.navigate('Home' as never);
+    } else {
+      Alert.alert('Error al iniciar sesión');
     }
-  };*/
+  };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Iniciar Sesión</Text>
+    <View className="p-4 flex bg-white flex-1">
+      <Text className="text-2xl text-[#722f37] text-center mb-5 font-bold">
+        Iniciar Sesión
+      </Text>
       <TextInput
-        style={styles.input}
+        className="h-12 border border-[#722f37] rounded px-2 mb-4 text-black"
         placeholder="Correo Electrónico"
         placeholderTextColor="#aaa"
         keyboardType="email-address"
@@ -48,26 +40,27 @@ export default function Login({ changeTab }: AuthenticationFormProps) {
         onChangeText={setEmail}
       />
       <TextInput
-        style={styles.input}
+        className="h-12 border border-[#722f37] rounded px-2 mb-4 text-black"
         placeholder="Contraseña"
         placeholderTextColor="#aaa"
         secureTextEntry
         value={password}
         onChangeText={setPassword}
       />
-      {/* TODO: implementar el envio de datos a firebase*/}
       <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate('Home' as never)}
+        className={`bg-[#722f37] py-4 rounded-full items-center self-center mt-2 w-48 ${
+          loading ? 'opacity-50' : ''
+        }`}
+        onPress={handleLogin}
         disabled={loading}
       >
-        <Text style={styles.buttonText}>
+        <Text className="text-white text-lg font-semibold text-center">
           {loading ? 'Cargando...' : 'Iniciar Sesión'}
         </Text>
       </TouchableOpacity>
-      <Text>¿No tienes una cuenta? </Text>
+      <Text className="mt-4 text-center">¿No tienes una cuenta? </Text>
       <Text
-        style={{ fontWeight: 'bold', color: '#722f37' }}
+        className="font-bold text-[#722f37] text-center"
         onPress={changeTab}
       >
         Registrate
@@ -75,42 +68,3 @@ export default function Login({ changeTab }: AuthenticationFormProps) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 20,
-    backgroundColor: '#fff',
-    flex: 1,
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 24,
-    color: '#722f37',
-    textAlign: 'center',
-    marginBottom: 20,
-    fontWeight: '700',
-  },
-  input: {
-    height: 50,
-    borderColor: '#722f37',
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    marginBottom: 15,
-    color: '#000',
-  },
-  button: {
-    backgroundColor: '#722f37',
-    paddingVertical: 15,
-    borderRadius: 99,
-    alignSelf: 'center',
-    alignItems: 'center',
-    marginTop: 10,
-    width: 200,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: '600',
-  },
-});

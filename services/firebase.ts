@@ -7,16 +7,17 @@ import {
 } from '@firebase/auth';
 import { doc, getFirestore, setDoc } from '@firebase/firestore';
 import { UserData } from '@utils/interfaces';
-import Config from 'react-native-config';
 
+//TODO: figure it out how to add .env without config import or some external tool
+// Maybe need to create an import with babel?¿
 const firebaseConfig = {
-  apiKey: Config.API_KEY,
-  authDomain: Config.AUTH_DOMAIN,
-  databaseURL: Config.DATABASE_URL,
-  projectId: Config.PROJECT_ID,
-  storageBucket: Config.STORAGE_BUCKET,
-  messagingSenderId: Config.MESSAGING_SENDER_ID,
-  appId: Config.APP_ID,
+  apiKey: '',
+  authDomain: '',
+  databaseURL: '',
+  projectId: '',
+  storageBucket: '',
+  messagingSenderId: '',
+  appId: '',
 };
 
 const app = initializeApp(firebaseConfig);
