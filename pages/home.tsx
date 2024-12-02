@@ -1,20 +1,19 @@
 import React, { useState } from 'react';
 import { View, FlatList, Text, StyleSheet } from 'react-native';
-import UserCard from '@components/userCard';
-import CourseCard from '@components/coursesCard';
-import { CourseData, Teacher } from '@utils/interfaces';
-import FloatingFilter from '@components/floatingFilter';
+import UserCard from '@components/ui/userCard';
+import CourseCard from '@components/ui/coursesCard';
+import { ICourse, ITeacher } from '@utils/interfaces';
+import FloatingFilter from '@components/ui/floatingFilter';
 
 export default function Home() {
   const [selectedTeacher, setSelectedTeacher] = useState<string | null>(null);
-
   // Mock data
-  const teacher: Teacher[] = [
+  const teacher: ITeacher[] = [
     { id: '1', name: 'John', lastName: 'Doe' },
     { id: '2', name: 'Juan', lastName: 'Perez' },
   ];
 
-  const courses: CourseData[] = [
+  const courses: ICourse[] = [
     {
       id: '1',
       title: 'Matemáticas',
@@ -60,7 +59,6 @@ export default function Home() {
   const handleFilterChange = (teacherName: string | null) => {
     setSelectedTeacher(teacherName);
   };
-
   return (
     <View style={styles.container}>
       <UserCard userID="1" title="Bienvenido Mario Correa" />

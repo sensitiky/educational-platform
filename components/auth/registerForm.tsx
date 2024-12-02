@@ -1,17 +1,10 @@
 import { useNavigation } from '@react-navigation/native';
 import { registerUser, saveUser } from '@services/firebase';
-import { AuthenticationFormProps, UserData } from '@utils/interfaces';
+import { IAuthenticationForm, IUser } from '@utils/interfaces';
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  Alert,
-} from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 
-export default function Register({ changeTab }: AuthenticationFormProps) {
+export default function Register({ changeTab }: IAuthenticationForm) {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
@@ -31,7 +24,7 @@ export default function Register({ changeTab }: AuthenticationFormProps) {
     setLoading(true);
     const userCredential = await registerUser(email, password);
     if (userCredential) {
-      const user: UserData = {
+      const user: IUser = {
         id: userCredential.user.uid,
         name: 'Juan',
         lastName: 'Perez',
@@ -48,10 +41,12 @@ export default function Register({ changeTab }: AuthenticationFormProps) {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Registrarse</Text>
+    <View className="p-5 bg-white flex">
+      <Text className="text-2xl text-[#722f37] text-center mb-5 font-bold">
+        Registrarse
+      </Text>
       <TextInput
-        style={styles.input}
+        className="h-12 border border-[#722f37] rounded-lg px-2 mb-4 text-black"
         placeholder="Correo Electrónico"
         placeholderTextColor="#aaa"
         keyboardType="email-address"
@@ -60,7 +55,7 @@ export default function Register({ changeTab }: AuthenticationFormProps) {
         onChangeText={setEmail}
       />
       <TextInput
-        style={styles.input}
+        className="h-12 border border-[#722f37] rounded-lg px-2 mb-4 text-black"
         placeholder="Contraseña"
         placeholderTextColor="#aaa"
         secureTextEntry
@@ -68,7 +63,7 @@ export default function Register({ changeTab }: AuthenticationFormProps) {
         onChangeText={setPassword}
       />
       <TextInput
-        style={styles.input}
+        className="h-12 border border-[#722f37] rounded-lg px-2 mb-4 text-black"
         placeholder="Confirmar Contraseña"
         placeholderTextColor="#aaa"
         secureTextEntry
@@ -76,17 +71,19 @@ export default function Register({ changeTab }: AuthenticationFormProps) {
         onChangeText={setConfirmPassword}
       />
       <TouchableOpacity
-        style={styles.button}
+        className={`bg-[#722f37] py-4 rounded-full items-center self-center mt-2 w-48 ${
+          loading ? 'opacity-50' : ''
+        }`}
         onPress={handleRegister}
         disabled={loading}
       >
-        <Text style={styles.buttonText}>
+        <Text className="text-white text-lg font-semibold">
           {loading ? 'Cargando...' : 'Registrarse'}
         </Text>
       </TouchableOpacity>
-      <Text style={{ textAlign: 'center' }}>¿Ya tienes una cuenta? </Text>
+      <Text className="text-center mt-4">¿Ya tienes una cuenta? </Text>
       <Text
-        style={{ fontWeight: 'bold', color: '#722f37', textAlign: 'center' }}
+        className="font-bold text-[#722f37] text-center"
         onPress={changeTab}
       >
         Inicia Sesión
@@ -94,42 +91,3 @@ export default function Register({ changeTab }: AuthenticationFormProps) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-    backgroundColor: '#fff',
-    flex: 1,
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 24,
-    color: '#722f37',
-    textAlign: 'center',
-    marginBottom: 20,
-    fontWeight: '700',
-  },
-  input: {
-    height: 50,
-    borderColor: '#722f37',
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    marginBottom: 15,
-    color: '#000',
-  },
-  button: {
-    backgroundColor: '#722f37',
-    paddingVertical: 15,
-    borderRadius: 99,
-    alignSelf: 'center',
-    alignItems: 'center',
-    marginTop: 10,
-    width: 200,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: '600',
-  },
-});

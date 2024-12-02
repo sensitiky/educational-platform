@@ -1,13 +1,13 @@
-import SearchBar from '@components/searchBar';
+import SearchBar from '@components/ui/searchBar';
 import { View, StyleSheet, FlatList } from 'react-native';
-import CourseCard from '@components/coursesCard';
-import { CourseData, Teacher } from '@utils/interfaces';
+import CourseCard from '@components/ui/coursesCard';
+import { ICourse, ITeacher } from '@utils/interfaces';
 import { useState } from 'react';
 
 export default function Courses() {
   const [searchQuery, setSearchQuery] = useState('');
-  const teacher: Teacher[] = [{ id: '1', name: 'John', lastName: 'Doe' }];
-  const courses: CourseData[] = [
+  const teacher: ITeacher[] = [{ id: '1', name: 'John', lastName: 'Doe' }];
+  const courses: ICourse[] = [
     {
       id: '1',
       title: 'Matemáticas',

@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { CourseData } from '@utils/interfaces';
+import { ICourse } from '@utils/interfaces';
 import { Text } from 'react-native';
 
 export default function CourseCard({
@@ -11,7 +11,7 @@ export default function CourseCard({
 }: {
   userID: string;
   courseID: string;
-  courseInfo: CourseData;
+  courseInfo: ICourse;
 }) {
   const navigation = useNavigation();
   const route = ['Course', { course: courseInfo }];

@@ -1,9 +1,11 @@
-import { CourseData } from './interfaces';
+import { ICourse } from './interfaces';
 
 export type screensParameters = {
-  Welcome: undefined;
   Home: undefined;
   Courses: undefined;
   Calendar: undefined;
-  Course: { course: CourseData };
+  Course: { course: ICourse };
+};
+export type AuthStackParameters = {
+  Welcome: undefined;
 };

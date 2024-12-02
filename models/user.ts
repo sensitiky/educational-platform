@@ -1,6 +1,6 @@
-import { UserData } from '@utils/interfaces';
+import { IUser } from '@utils/interfaces';
 
-export class User implements UserData {
+export class User implements IUser {
   id: string;
   name: string;
   lastName: string;

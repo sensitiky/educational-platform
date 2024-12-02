@@ -1,23 +1,23 @@
 import { LightTheme, DarkTheme } from '@constants/theme';
 
-export interface UserData {
+export interface IUser {
   id: string;
   name?: string;
   lastName?: string;
   role: string;
 }
-export interface CourseData {
+export interface ICourse {
   id: string;
   title: string;
   description: string;
-  teacher: Teacher[];
+  teacher: ITeacher[];
 }
-export interface Teacher {
+export interface ITeacher {
   id: string;
   name: string;
   lastName: string;
 }
-export interface AuthenticationFormProps {
+export interface IAuthenticationForm {
   changeTab: () => void;
 }
 export interface IThemeContext {

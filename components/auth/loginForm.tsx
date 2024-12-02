@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { AuthenticationFormProps } from '@utils/interfaces';
+import { IAuthenticationForm } from '@utils/interfaces';
 import { loginUser } from '@services/firebase';
 
-export default function Login({ changeTab }: AuthenticationFormProps) {
+export default function Login({ changeTab }: IAuthenticationForm) {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
