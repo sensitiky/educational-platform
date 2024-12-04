@@ -33,7 +33,7 @@ export default function Register({ changeTab }: IAuthenticationForm) {
       const succes = await saveUser(user);
       if (succes) {
         console.log('Funciona');
-        navigation.navigate('Home' as never);
+        navigation.navigate('Home');
       } else {
         console.log('Pincho');
       }

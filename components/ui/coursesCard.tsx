@@ -14,11 +14,11 @@ export default function CourseCard({
   courseInfo: ICourse;
 }) {
   const navigation = useNavigation();
-  const route = ['Course', { course: courseInfo }];
+
   return (
     <TouchableOpacity
       className="bg-white p-4 rounded-lg m-2 elevation-md"
-      onPress={() => navigation.navigate(route as never)}
+      onPress={() => navigation.navigate('Course', { course: courseInfo })}
     >
       <Text className="text-black text-lg font-bold mb-1">
         {courseInfo.title}

@@ -19,7 +19,7 @@ export default function Login({ changeTab }: IAuthenticationForm) {
     setLoading(true);
     const success = await loginUser(email, password);
     if (success) {
-      navigation.navigate('Home' as never);
+      navigation.navigate('Home');
     } else {
       Alert.alert('Error al iniciar sesión');
     }
@@ -58,7 +58,7 @@ export default function Login({ changeTab }: IAuthenticationForm) {
           {loading ? 'Cargando...' : 'Iniciar Sesión'}
         </Text>
       </TouchableOpacity>
-      <Text className="mt-4 text-center">¿No tienes una cuenta? </Text>
+      <Text className="mt-4 text-center">¿No tienes una cuenta?</Text>
       <Text
         className="font-bold text-[#722f37] text-center"
         onPress={changeTab}

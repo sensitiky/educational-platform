@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import Calendar from '@pages/calendar';
 import CourseInfo from '@pages/courseInfo';
 import Courses from '@pages/courses';
+import Profile from '@pages/profile';
 
 export const AppStack = () => {
   return (
@@ -48,6 +49,14 @@ export const AppStack = () => {
         options={{
           drawerItemStyle: { display: 'none' },
           title: '',
+        }}
+      />
+      <Drawer.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          drawerItemStyle: { display: 'none' },
+          title: 'Perfil',
         }}
       />
     </Drawer.Navigator>

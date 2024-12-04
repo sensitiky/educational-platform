@@ -1,13 +1,5 @@
-import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Dimensions,
-} from 'react-native';
-
-const { width } = Dimensions.get('window');
+import { useState } from 'react';
+import { View, Text, TouchableOpacity, Dimensions } from 'react-native';
 
 const DAYS_OF_WEEK = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -70,53 +62,74 @@ export default function Calendar() {
     setSelectedDay(null);
   };
 
+  const isToday = (day: number) => {
+    const today = new Date();
+    return (
+      day === today.getDate() &&
+      currentDate.getMonth() === today.getMonth() &&
+      currentDate.getFullYear() === today.getFullYear()
+    );
+  };
+
   return (
-    <View style={styles.calendar}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={prevMonth} style={styles.navButton}>
-          <Text style={styles.navButtonText}>{'‹'}</Text>
+    <View className="w-[95%] p-4 bg-white rounded-xl elevation-5 my-2 self-center">
+      {/* Header */}
+      <View className="flex-row justify-between items-center mb-2">
+        <TouchableOpacity onPress={prevMonth} className="p-2">
+          <Text className="text-2xl text-[#6200EE] font-semibold">{'‹'}</Text>
         </TouchableOpacity>
-        <Text style={styles.headerText}>
+        <Text className="text-lg font-bold text-gray-800">
           {currentDate.toLocaleString('default', {
+            day: 'numeric',
             month: 'long',
             year: 'numeric',
           })}
         </Text>
-        <TouchableOpacity onPress={nextMonth} style={styles.navButton}>
-          <Text style={styles.navButtonText}>{'›'}</Text>
+        <TouchableOpacity onPress={nextMonth} className="p-2">
+          <Text className="text-2xl text-[#6200EE] font-semibold">{'›'}</Text>
         </TouchableOpacity>
       </View>
 
-      <View style={[styles.week, styles.daysHeader]}>
+      {/* Days of the week */}
+      <View className="flex-row justify-between border-b pb-2 mb-2">
         {DAYS_OF_WEEK.map((day) => (
-          <Text key={day} style={[styles.dayText, styles.daysHeaderText]}>
+          <Text
+            key={day}
+            className="flex-1 text-center font-semibold text-[#6200EE]"
+          >
             {day}
           </Text>
         ))}
       </View>
 
-      <View style={styles.body}>
+      {/* Calendar body */}
+      <View>
         {weeks.map((week, weekIndex) => (
-          <View key={`week-${weekIndex}`} style={styles.week}>
+          <View key={`week-${weekIndex}`} className="flex-row mb-1">
             {week.map((day, dayIndex) => {
               const isWeekend = dayIndex === 0 || dayIndex === 6;
-              const isSelected = day === selectedDay;
+              const selected = day === selectedDay;
+              const today = isToday(day);
+
               return day !== 0 ? (
                 <TouchableOpacity
                   key={`day-${dayIndex}-${day}`}
-                  style={[
-                    styles.day,
-                    isSelected && styles.selectedDay,
-                    isWeekend && styles.weekendDay,
-                  ]}
+                  className={`flex-1 items-center justify-center p-2 m-0.5 rounded-lg 
+                    ${selected || today ? 'bg-[#722f37]' : 'bg-gray-200'}
+                    ${isWeekend && !selected && !today ? 'bg-red-100' : ''}
+                    elevation-2
+                  `}
                   onPress={() => setSelectedDay(day)}
                 >
                   <Text
-                    style={[
-                      styles.dayText,
-                      isSelected && styles.selectedDayText,
-                      isWeekend && styles.weekendDayText,
-                    ]}
+                    className={`text-base 
+                      ${
+                        selected || today
+                          ? 'text-white font-bold'
+                          : 'text-gray-700'
+                      }
+                      ${isWeekend && !selected && !today ? 'text-red-500' : ''}
+                    `}
                   >
                     {day}
                   </Text>
@@ -124,7 +137,7 @@ export default function Calendar() {
               ) : (
                 <View
                   key={`empty-${dayIndex}-${weekIndex}`}
-                  style={[styles.day, styles.empty]}
+                  className="flex-1 items-center justify-center p-2 m-0.5 rounded-lg bg-transparent"
                 >
                   <Text></Text>
                 </View>
@@ -136,88 +149,3 @@ export default function Calendar() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  calendar: {
-    width: width * 0.95,
-    padding: 15,
-    backgroundColor: '#ffffff',
-    borderRadius: 12,
-    elevation: 5,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    marginVertical: 10,
-    alignSelf: 'center',
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  navButton: {
-    padding: 8,
-  },
-  navButtonText: {
-    fontSize: 24,
-    color: '#6200EE',
-    fontWeight: '600',
-  },
-  headerText: {
-    fontSize: 20,
-    fontWeight: '700',
-    color: '#333333',
-  },
-  daysHeader: {
-    borderBottomWidth: 1,
-    borderBottomColor: '#dddddd',
-    paddingBottom: 8,
-    marginBottom: 8,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  daysHeaderText: {
-    fontWeight: '600',
-    color: '#6200EE',
-    textAlign: 'center',
-    flex: 1,
-  },
-  body: {
-    // Mantener el cuerpo sin estilos específicos
-  },
-  week: {
-    flexDirection: 'row',
-    marginBottom: 4,
-  },
-  day: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 12,
-    marginHorizontal: 2,
-    borderRadius: 6,
-    backgroundColor: '#f9f9f9',
-  },
-  empty: {
-    backgroundColor: 'transparent',
-  },
-  dayText: {
-    fontSize: 16,
-    color: '#333333',
-  },
-  selectedDay: {
-    backgroundColor: '#6200EE',
-  },
-  selectedDayText: {
-    color: '#ffffff',
-    fontWeight: '700',
-  },
-  weekendDay: {
-    backgroundColor: '#ffe6e6',
-  },
-  weekendDayText: {
-    color: '#ff3333',
-  },
-});

@@ -7,10 +7,9 @@ import {
   UserCredential,
 } from '@firebase/auth';
 import { doc, getFirestore, setDoc } from '@firebase/firestore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { IUser } from '@utils/interfaces';
 
-//TODO: figure it out how to add .env without config import or some external tool
-// Maybe need to create an import with babel?¿
 const firebaseConfig = {
   apiKey: process.env.EXPO_PUBLIC_API_KEY,
   authDomain: process.env.EXPO_PUBLIC_AUTH_DOMAIN,
@@ -25,6 +24,20 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const database = getFirestore();
 
+const saveUserUID = async (uid: string) => {
+  try {
+    await AsyncStorage.setItem('@userUID', uid);
+  } catch (error) {
+    console.error(`Error al almacenar el uid ${error}`);
+  }
+};
+const removeUserUID = async () => {
+  try {
+    await AsyncStorage.removeItem('@userUID');
+  } catch (error) {
+    console.error(`Error al remover el uid ${error}`);
+  }
+};
 export const saveUser = async (user: IUser): Promise<boolean> => {
   try {
     const collectionName =
@@ -51,6 +64,7 @@ export const loginUser = async (
 ): Promise<UserCredential | null> => {
   try {
     const user = await signInWithEmailAndPassword(auth, email, password);
+    await saveUserUID(user.user.uid);
     return user;
   } catch (error) {
     console.error(`Failed to login ${error}`);
@@ -77,6 +91,7 @@ export const logoutUser = async () => {
   const auth = getAuth();
   try {
     await signOut(auth);
+    await removeUserUID();
     console.log('Usuario cerrado sesión correctamente');
   } catch (error) {
     console.error(`Error al cerrar sesión ${error}`);

@@ -14,7 +14,7 @@ export default function SearchBar({
       <Ionicons name="search" size={20} color="#000" style={styles.icon} />
       <TextInput
         style={styles.input}
-        placeholder="Mathematics"
+        placeholder="Matemáticas"
         placeholderTextColor="#5e5e5e"
         value={value}
         onChangeText={onChangeText}

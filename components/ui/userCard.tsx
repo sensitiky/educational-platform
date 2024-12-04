@@ -1,12 +1,15 @@
 import { View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { ICourse } from '@utils/interfaces';
 
 export default function UserCard({
   userID,
   title,
+  courses,
 }: {
   userID: string;
   title: string;
+  courses: ICourse[];
 }) {
   const navigation = useNavigation();
   const imgMock = 'https://avatars.githubusercontent.com/u/29111576?v=4';
@@ -19,7 +22,7 @@ export default function UserCard({
       <View style={styles.buttonsContainer}>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate('Courses' as never);
+            navigation.navigate('Profile');
           }}
           style={styles.secondaryButton}
         >
@@ -29,7 +32,7 @@ export default function UserCard({
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate('Courses' as never);
+            navigation.navigate('Course', { courses });
           }}
           style={styles.primaryButton}
         >

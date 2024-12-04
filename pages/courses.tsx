@@ -1,47 +1,16 @@
 import SearchBar from '@components/ui/searchBar';
-import { View, StyleSheet, FlatList } from 'react-native';
+import { View, StyleSheet, FlatList, Text } from 'react-native';
 import CourseCard from '@components/ui/coursesCard';
 import { ICourse, ITeacher } from '@utils/interfaces';
 import { useState } from 'react';
 
-export default function Courses() {
+export default function Courses({ courseInfo }: { courseInfo: ICourse[] }) {
   const [searchQuery, setSearchQuery] = useState('');
-  const teacher: ITeacher[] = [{ id: '1', name: 'John', lastName: 'Doe' }];
-  const courses: ICourse[] = [
-    {
-      id: '1',
-      title: 'Matemáticas',
-      description: '1° TSAS 2024',
-      teacher: teacher,
-    },
-    {
-      id: '2',
-      title: 'Programación 1',
-      description: '1° TSAS 2024',
-      teacher: teacher,
-    },
-    {
-      id: '3',
-      title: 'Lógica',
-      description: '1° TSAS 2024',
-      teacher: teacher,
-    },
-    {
-      id: '4',
-      title: 'Sistema Operativo',
-      description: '1° TSAS 2024',
-      teacher: teacher,
-    },
-    {
-      id: '5',
-      title: 'Estructura de Datos',
-      description: '1° TSAS 2024',
-      teacher: teacher,
-    },
-  ];
-  const filteredCourses = courses.filter((course) =>
+
+  const filteredCourses = courseInfo.filter((course: ICourse) =>
     course.title.toLowerCase().includes(searchQuery)
   );
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -56,7 +25,7 @@ export default function Courses() {
           value={searchQuery}
           onChangeText={(text) => setSearchQuery(text)}
         />
-      </View>
+      </View>{' '}
     </View>
   );
 }

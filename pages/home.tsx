@@ -1,18 +1,30 @@
-import React, { useState } from 'react';
-import { View, FlatList, Text, StyleSheet } from 'react-native';
+import React, { useContext, useState } from 'react';
+import {
+  View,
+  FlatList,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import UserCard from '@components/ui/userCard';
 import CourseCard from '@components/ui/coursesCard';
-import { ICourse, ITeacher } from '@utils/interfaces';
+import { IAssigments, ICourse, ITeacher } from '@utils/interfaces';
 import FloatingFilter from '@components/ui/floatingFilter';
+import { logoutUser } from '@services/firebase';
+import { UserContext } from '@utils/helpers';
 
 export default function Home() {
   const [selectedTeacher, setSelectedTeacher] = useState<string | null>(null);
+  const { user } = useContext(UserContext);
   // Mock data
   const teacher: ITeacher[] = [
     { id: '1', name: 'John', lastName: 'Doe' },
     { id: '2', name: 'Juan', lastName: 'Perez' },
   ];
 
+  const tasks: IAssigments[] = [
+    { title: 'Cuack', description: 'Cuack 2', startDay: '', endDay: '' },
+  ];
   const courses: ICourse[] = [
     {
       id: '1',
@@ -25,6 +37,7 @@ export default function Home() {
       title: 'Programación 1',
       description: '1° TSAS 2024',
       teacher: [teacher[1]],
+      assigments: [tasks[0]],
     },
     {
       id: '3',
@@ -59,14 +72,23 @@ export default function Home() {
   const handleFilterChange = (teacherName: string | null) => {
     setSelectedTeacher(teacherName);
   };
+
   return (
     <View style={styles.container}>
-      <UserCard userID="1" title="Bienvenido Mario Correa" />
+      <UserCard
+        userID={user?.id || ''}
+        title={`Bienvenido ${user?.name}`}
+        courses={courses}
+      />
       <FlatList
         data={filteredCourses}
         keyExtractor={(item) => item.id}
         renderItem={({ item: course }) => (
-          <CourseCard userID="1" courseID={course.id} courseInfo={course} />
+          <CourseCard
+            userID={user?.id || ''}
+            courseID={course.id}
+            courseInfo={course}
+          />
         )}
         ListEmptyComponent={
           <View style={styles.emptyContainer}>

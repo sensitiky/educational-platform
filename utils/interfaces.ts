@@ -11,6 +11,13 @@ export interface ICourse {
   title: string;
   description: string;
   teacher: ITeacher[];
+  assigments?: IAssigments[];
+}
+export interface IAssigments {
+  title: string;
+  description: string;
+  startDay: string;
+  endDay: string;
 }
 export interface ITeacher {
   id: string;
@@ -23,4 +30,8 @@ export interface IAuthenticationForm {
 export interface IThemeContext {
   theme: typeof LightTheme | typeof DarkTheme;
   toggleTheme: () => void;
+}
+export interface UserContextProps {
+  user: IUser | null;
+  loading: boolean;
 }

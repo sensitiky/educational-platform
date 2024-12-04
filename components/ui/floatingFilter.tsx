@@ -1,9 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
-import { FloatingFilterProps } from '@utils/helpers';
+import { FloatingFilterProps } from '@utils/types';
 import React, { useState } from 'react';
 import {
   TouchableOpacity,
-  StyleSheet,
   Text,
   View,
   Modal,
@@ -27,7 +26,7 @@ export default function FloatingFilter({
   };
 
   return (
-    <View style={styles.container}>
+    <View className="absolute bottom-8 right-8 items-center justify-center p-2">
       <Modal
         transparent={true}
         visible={expanded}
@@ -35,31 +34,33 @@ export default function FloatingFilter({
         onRequestClose={() => setExpanded(false)}
       >
         <TouchableWithoutFeedback onPress={() => setExpanded(false)}>
-          <View style={styles.modalOverlay} />
+          <View className="flex-1 bg-black/15" />
         </TouchableWithoutFeedback>
-        <View style={styles.modalContent}>
-          <Text style={styles.modalTitle}>Filtrar por Profesor</Text>
+        <View className="absolute bottom-24 right-8 bg-white p-5 rounded-lg w-52">
+          <Text className="text-lg font-bold text-center mb-4">
+            Filtrar por Profesor
+          </Text>
           <FlatList
             data={teachers}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
               <TouchableOpacity
-                style={styles.filterOption}
+                className="py-4 border-bborder-gray-200"
                 onPress={() =>
                   handleSelectFilter(`${item.name} ${item.lastName}`)
                 }
               >
-                <Text style={styles.filterText}>
+                <Text className="text-base text-purple-700 text-center">
                   {item.name} {item.lastName}
                 </Text>
               </TouchableOpacity>
             )}
             ListHeaderComponent={
               <TouchableOpacity
-                style={styles.filterOption}
+                className="py-2 border-b border-gray-200"
                 onPress={() => handleSelectFilter(null)}
               >
-                <Text style={[styles.filterText, styles.resetText]}>
+                <Text className="text-base text-purple-700 font-bold text-center">
                   Mostrar Todos
                 </Text>
               </TouchableOpacity>
@@ -67,71 +68,16 @@ export default function FloatingFilter({
           />
         </View>
       </Modal>
-      <TouchableOpacity style={styles.button} onPress={toggleExpanded}>
-        <Text style={styles.buttonText}>
-          {expanded ? (
-            <Ionicons name="close-outline" size={30} />
-          ) : (
-            <Ionicons name="search-outline" size={30} />
-          )}
-        </Text>
+      <TouchableOpacity
+        className="bg-[#722f37] size-16 rounded-full items-center justify-center elevation-sm"
+        onPress={toggleExpanded}
+      >
+        <Ionicons
+          name={expanded ? 'close-outline' : 'search-outline'}
+          size={38}
+          color="#fff"
+        />
       </TouchableOpacity>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    position: 'absolute',
-    bottom: 30,
-    right: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  button: {
-    backgroundColor: '#722f37',
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
-    elevation: 5,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 30,
-  },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.3)',
-  },
-  modalContent: {
-    position: 'absolute',
-    bottom: 100,
-    right: 30,
-    backgroundColor: '#fff',
-    padding: 20,
-    borderRadius: 10,
-    elevation: 10,
-    width: 200,
-  },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: '700',
-    marginBottom: 15,
-    textAlign: 'center',
-  },
-  filterOption: {
-    paddingVertical: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-  },
-  filterText: {
-    fontSize: 16,
-    color: '#6200EE',
-    textAlign: 'center',
-  },
-  resetText: {
-    fontWeight: '700',
-  },
-});
